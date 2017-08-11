@@ -4,6 +4,7 @@ A project to port [libvlc for android](https://code.videolan.org/videolan/vlc-an
 from Java to C# 
 
 
+
 ## Classes to be Implemented 
 1. **Util/Dumper** : Depends on 
   * Libvlc.LibVlc
@@ -16,6 +17,6 @@ from Java to C#
   * Libvlc.MediaDiscoverer
   * Libvlc.MediaList
 
-3. **Util/VLCUtil** : Depends on 
+3. **Util/VLCUtil** : Current State ; Reached to *HasCompatibleCPU*  and *SearchLibrary*
   * Libvlc.LibVlc
   * Libvlc.Media
