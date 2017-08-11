@@ -51,6 +51,7 @@
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\HWDecoderUtil.cs" />
     <Compile Include="Util\MediaBrowser.cs" />
+    <Compile Include="Util\VLCUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

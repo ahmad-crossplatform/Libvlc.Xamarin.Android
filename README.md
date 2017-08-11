@@ -15,3 +15,7 @@ from Java to C#
   * Libvlc.Media
   * Libvlc.MediaDiscoverer
   * Libvlc.MediaList
+
+3. Util/VLCUtil : Depends on 
+  * Libvlc.LibVlc
+  * Libvlc.Media
