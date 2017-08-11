@@ -46,7 +46,11 @@
   <ItemGroup>
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AndroidUtil.cs" />
+    <Compile Include="Util\Dumper.cs" />
     <Compile Include="Util\Extensions.cs" />
+    <Compile Include="Util\HWDecoderUtil.cs" />
+    <Compile Include="Util\MediaBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
