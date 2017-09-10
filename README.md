@@ -5,7 +5,7 @@ from Java to C#
 
 
 
-## Classes to be Implemented 
+## Classes to be Implemented (In Util) 
 1. **Util/Dumper** : Depends on 
   * Libvlc.LibVlc
   * Libvlc.Media
@@ -17,6 +17,21 @@ from Java to C#
   * Libvlc.MediaDiscoverer
   * Libvlc.MediaList
 
-3. **Util/VLCUtil** : Current State ; Reached to *HasCompatibleCPU*  and *SearchLibrary*
+3. **Util/VLCUtil** : Completed however GetThumbnail is not implemented, as it depends  
   * Libvlc.LibVlc
   * Libvlc.Media
+
+
+## Classes to be Implemented in Root Folder 
+
+1. AWindow 
+2. Dialog
+3. IVLCOut
+4. LibVlc
+5. Media
+6. MediaDiscoverer
+7. MediaList
+8. MediaPlayer
+9. VLCEvent (Done) 
+10.VlCObject
+
