@@ -33,5 +33,5 @@ from Java to C#
 7. MediaList
 8. MediaPlayer
 9. VLCEvent (Done) 
-10.VlCObject
+10. VlCObject
 
