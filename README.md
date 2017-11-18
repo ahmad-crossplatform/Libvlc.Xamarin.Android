@@ -1,4 +1,4 @@
-# Libvlc.Xamarin.Android
+#_ Libvlc.Xamarin.Android
 
 A project to port [libvlc for android](https://code.videolan.org/videolan/vlc-android/tree/master/libvlc/src/org/videolan/libvlc)
 from Java to C# 
@@ -32,6 +32,6 @@ from Java to C#
 6. MediaDiscoverer
 7. MediaList
 8. MediaPlayer
-9. VLCEvent (Done) 
+9. _VLCEvent (Done)_ 
 10. VlCObject
 
