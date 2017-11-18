@@ -32,6 +32,6 @@ from Java to C#
 6. MediaDiscoverer
 7. MediaList
 8. MediaPlayer
-9. _VLCEvent (Done)_ 
+9. ~~VLCEvent (Done)~~
 10. VlCObject
 
