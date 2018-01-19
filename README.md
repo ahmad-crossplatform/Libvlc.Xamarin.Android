@@ -26,7 +26,7 @@ from Java to C#
 
 1. AWindow 
 2. Dialog
-3. IVLCOut
+3. ~~IVLCOut(Done)~~
 4. LibVlc
 5. Media
 6. MediaDiscoverer
