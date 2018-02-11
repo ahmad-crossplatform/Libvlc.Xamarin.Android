@@ -1,6 +1,6 @@
 ﻿namespace Libvlc.Xamarin.Android
 {
-    internal abstract class VLCEvent
+    public abstract class VLCEvent
     {
         private readonly int _type;
         private readonly long _arg1;
@@ -33,5 +33,11 @@
             this._arg1 = this._arg2 = 0;
             this.argf1 = argf;
         }
+
+        public void Release ()
+        {
+            // do nothing
+        }
+
     }
 }
