@@ -1,9 +1,10 @@
+
 # Libvlc.Xamarin.Android
 
 A project to port [libvlc for android](https://code.videolan.org/videolan/vlc-android/tree/master/libvlc/src/org/videolan/libvlc)
 from Java to C# 
 
-
+*Slack: crossplatformsweden.slack.com   Channel: #libvlc-xamarin-droid*
 
 ## Classes to be Implemented (In Util) 
 1. **Util/Dumper** : Depends on 
