@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Android.OS;
 using Java.Lang;
+using Libvlc.Xamarin.Android.Interfaces;
 
 namespace Libvlc.Xamarin.Android
 {

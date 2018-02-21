@@ -46,14 +46,16 @@
   <ItemGroup>
     <Compile Include="AWindow.cs" />
     <Compile Include="Dialog.cs" />
-    <Compile Include="IListener.cs" />
-    <Compile Include="IVLCVOut.cs" />
+    <Compile Include="Interfaces\IVLCVOut.cs" />
     <Compile Include="LibVLC.cs" />
     <Compile Include="MediaPlayer.cs" />
     <Compile Include="Media\Media.cs" />
     <Compile Include="Media\MediaDiscoverer.cs" />
+    <Compile Include="NativeLock.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SurfaceTextureListener.cs" />
+    <Compile Include="SurfaceTextureThread.cs" />
     <Compile Include="Util\AndroidUtil.cs" />
     <Compile Include="Util\Dumper.cs" />
     <Compile Include="Util\Extensions.cs" />
@@ -62,6 +64,12 @@
     <Compile Include="Util\VLCUtil.cs" />
     <Compile Include="VLCEvent.cs" />
     <Compile Include="VLCObject.cs" />
+    <Compile Include="Interfaces\ICallback.cs" />
+    <Compile Include="Interfaces\IListener.cs" />
+    <Compile Include="Interfaces\IOnNewVideoLayoutListener.cs" />
+    <Compile Include="Interfaces\ISurfaceCallback.cs" />
+    <Compile Include="SurfaceHelper.cs" />
+    <Compile Include="SurfaceHolderCallBack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -71,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,4 @@
-﻿namespace Libvlc.Xamarin.Android
+﻿namespace Libvlc.Xamarin.Android.Interfaces
 {
     /// <summary>
     /// Listener for libvlc events
