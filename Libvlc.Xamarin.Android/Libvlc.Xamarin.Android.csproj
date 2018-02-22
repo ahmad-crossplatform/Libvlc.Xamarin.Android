@@ -45,7 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWindow.cs" />
-    <Compile Include="Dialog.cs" />
+    <Compile Include="Dialogs\Dialog.cs" />
+    <Compile Include="Dialogs\ErrorMessage.cs" />
+    <Compile Include="Dialogs\IdDialog.cs" />
+    <Compile Include="Dialogs\LoginDialog.cs" />
+    <Compile Include="Dialogs\ProgressDialog.cs" />
+    <Compile Include="Dialogs\QuestionDialog.cs" />
+    <Compile Include="Interfaces\ICallbacks.cs" />
     <Compile Include="Interfaces\IVLCVOut.cs" />
     <Compile Include="LibVLC.cs" />
     <Compile Include="MediaPlayer.cs" />

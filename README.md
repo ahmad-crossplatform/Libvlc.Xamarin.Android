@@ -25,8 +25,8 @@ from Java to C#
 
 ## Classes to be Implemented in Root Folder 
 
-1. AWindow  (needs a dllImprt for NativeDetachEvents)
-2. Dialog
+1. AWindow  (needs a dllImprts)
+2. Dialog  (needs a dllImprts)
 3. ~~IVLCOut(Done)~~
 4. LibVlc
 5. Media
@@ -34,5 +34,5 @@ from Java to C#
 7. MediaList
 8. MediaPlayer
 9. ~~VLCEvent (Done)~~
-10. VlCObject  (needs a dllImprt for NativeDetachEvents)
+10. VlCObject  (needs a dllImprts)
 
