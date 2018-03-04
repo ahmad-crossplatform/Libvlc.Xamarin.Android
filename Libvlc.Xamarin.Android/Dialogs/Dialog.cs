@@ -60,7 +60,7 @@ namespace Libvlc.Xamarin.Android
 	    /// </summary>
 	    /// <param name="libVlc"> valid LibVLC object </param>
 	    /// <param name="callbacks"> dialog callbacks or null to unregister </param>
-	    public static void SetCallbacks(LibVLC libVlc, ICallbacks callbacks)
+	    public static void SetCallbacks(LibVlc libVlc, ICallbacks callbacks)
         {
             if (callbacks != null && _handler == null) _handler = new Handler(Looper.MainLooper);
             _callbacks = callbacks;
@@ -70,6 +70,6 @@ namespace Libvlc.Xamarin.Android
 
         //JAVA TO C# CONVERTER TODO TASK: Replace 'unknown' with the appropriate dll name:
         [DllImport("unknown")]
-        private static extern void nativeSetCallbacks(LibVLC libVlc, bool enabled);
+        private static extern void nativeSetCallbacks(LibVlc libVlc, bool enabled);
     }
 }

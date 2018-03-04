@@ -3,7 +3,7 @@ using Java.Util;
 
 namespace Libvlc.Xamarin.Android.Util
 {
-    public class HwDecoderUtil
+    public  class HwDecoderUtil
     {
         public enum AudioOutput
         {

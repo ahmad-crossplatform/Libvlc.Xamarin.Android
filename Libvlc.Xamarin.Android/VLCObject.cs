@@ -10,17 +10,17 @@ namespace Libvlc.Xamarin.Android
     {
         private IListener<T> _eventListener = null;
         private Handler _handler = null;
-        private LibVLC _libVLC;
+        private LibVlc _libVLC;
         private int _nativeRefCount = 1;
 
 
-        public LibVLC LibVlc
+        public LibVlc LibVlc
         {
             get =>  _libVLC; 
             set => _libVLC = value; 
         }
 
-        protected VLCObject(LibVLC libvlc)
+        protected VLCObject(LibVlc libvlc)
         {
             LibVlc = libvlc;
         }
