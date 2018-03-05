@@ -1,4 +1,4 @@
-﻿namespace Libvlc.Xamarin.Android
+﻿namespace Libvlc.Xamarin.Android.Util
 {
     public class NativeLock
     {

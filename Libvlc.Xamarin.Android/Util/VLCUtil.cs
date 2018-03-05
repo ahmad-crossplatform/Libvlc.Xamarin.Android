@@ -1,29 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using Android.Annotation;
-using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
 using Java.Nio;
 using Java.IO;
 using Java.Lang;
 using Console = System.Console;
-using Double = Java.Lang.Double;
-using Environment = System.Environment;
 using File = Java.IO.File;
 using FileNotFoundException = Java.IO.FileNotFoundException;
 using IOException = Java.IO.IOException;
 using String = Java.Lang.String;
 using StringBuilder = System.Text.StringBuilder;
-
+using Uri =  Android.Net.Uri;
 namespace Libvlc.Xamarin.Android.Util
 {
     public  class VLCUtil
@@ -33,33 +24,33 @@ namespace Libvlc.Xamarin.Android.Util
         private static bool _isCompatible = false;
 
         public static string ErrorMessage { get; set; }
-        private static readonly string[] CPU_archs = { "*Pre-v4", "*v4", "*v4T", "v5T", "v5TE", "v5TEJ", "v6", "v6KZ", "v6T2", "v6K", "v7", "*v6-M", "*v6S-M", "*v7E-M", "*v8" };
-        private const string URI_AUTHORIZED_CHARS = "!'()*";
+        private static readonly string[] CpuArchs = { "*Pre-v4", "*v4", "*v4T", "v5T", "v5TE", "v5TEJ", "v6", "v6KZ", "v6T2", "v6K", "v7", "*v6-M", "*v6S-M", "*v7E-M", "*v8" };
+        private const string UriAuthorizedChars = "!'()*";
 
         [TargetApi(Value = (int)BuildVersionCodes.Lollipop)]
-        public static IList<string> ABIList21
+        public static IList<string> AbiList21
         {
             get
             {
                 var abis = Build.SupportedAbis;
                 if (abis == null || abis.Count == 0)
                 {
-                    return ABIList;
+                    return AbiList;
                 }
                 return abis;
             }
         }
 
         [Obsolete]
-        public static IList<string> ABIList => new List<string>{ Build.CpuAbi , Build.CpuAbi2 };
+        public static IList<string> AbiList => new List<string>{ Build.CpuAbi , Build.CpuAbi2 };
 
-        public static  bool HasCompatibleCPU(Context context)
+        public static  bool HasCompatibleCpu(Context context)
         {
             string line = "";
             float frequency = -1;
             bool hasNeon = false, hasFpu = false, hasArmV6 = false, hasPlaceHolder = false,
-                hasArmV7 = false, hasMips = false, hasX86 = false, is64bits = false, isIntel = false;
-            float bogoMIPS = -1;
+                hasArmV7 = false, hasMips = false, hasX86 = false, is64Bits = false, isIntel = false;
+            float bogoMips = -1;
 
             int processors = 0;
             IList<string> abis;
@@ -68,7 +59,7 @@ namespace Libvlc.Xamarin.Android.Util
             bool elfHasX86 = false;
             bool elfHasArm = false;
             bool elfHasMips = false;
-            bool elfIs64bits = false;
+            bool elfIs64Bits = false;
 
             FileReader fileReader = null;
             BufferedReader br = null;
@@ -85,11 +76,11 @@ namespace Libvlc.Xamarin.Android.Util
           
             if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
             {
-                abis = ABIList21; 
+                abis = AbiList21; 
             }
             else
             {
-                abis = ABIList; 
+                abis = AbiList; 
             }
 
             foreach (var abi in abis)
@@ -101,7 +92,7 @@ namespace Libvlc.Xamarin.Android.Util
                         break;
                     case "x86_64":
                         hasX86 = true;
-                        is64bits = true;
+                        is64Bits = true;
                         break;
                     case "armeabi-v7a":
                         hasArmV7 = true;
@@ -114,7 +105,7 @@ namespace Libvlc.Xamarin.Android.Util
                         hasNeon = true;
                         hasArmV6 = true;
                         hasArmV7 = true;
-                        is64bits = true;
+                        is64Bits = true;
                         break;
                 }                               
             }
@@ -123,14 +114,14 @@ namespace Libvlc.Xamarin.Android.Util
            var lib = SearchLibrary(context.ApplicationInfo);
             if (lib != null && (elf = ReadLib(lib)) != null)
             {
-                elfHasX86 = elf.e_machine == EM_386 || elf.e_machine == EM_X86_64;
-                elfHasArm = elf.e_machine == EM_ARM || elf.e_machine == EM_AARCH64;
-                elfHasMips = elf.e_machine == EM_MIPS;
-                elfIs64bits = elf.is64bits;
+                elfHasX86 = elf.EMachine == Em386 || elf.EMachine == EmX8664;
+                elfHasArm = elf.EMachine == EmArm || elf.EMachine == EmAarch64;
+                elfHasMips = elf.EMachine == EmMips;
+                elfIs64Bits = elf.Is64Bits;
 
-                Log.Info(Tag, "ELF ABI = " + (elfHasArm ? "arm" : elfHasX86 ? "x86" : "mips") + ", " + (elfIs64bits ? "64bits" : "32bits"));
-                Log.Info(Tag, "ELF arch = " + elf.att_arch);
-                Log.Info(Tag, "ELF fpu = " + elf.att_fpu);
+                Log.Info(Tag, "ELF ABI = " + (elfHasArm ? "arm" : elfHasX86 ? "x86" : "mips") + ", " + (elfIs64Bits ? "64bits" : "32bits"));
+                Log.Info(Tag, "ELF arch = " + elf.AttArch);
+                Log.Info(Tag, "ELF fpu = " + elf.AttFpu);
             }
             else
             {
@@ -143,7 +134,7 @@ namespace Libvlc.Xamarin.Android.Util
                 fileReader = new FileReader("/proc/cpuinfo");
                 br = new BufferedReader(fileReader);
                // string line;
-                while (!string.ReferenceEquals(line = br.ReadLine(), null))
+                while (!ReferenceEquals(line = br.ReadLine(), null))
                 {
                     if (line.Contains("AArch64"))
                     {
@@ -195,16 +186,16 @@ namespace Libvlc.Xamarin.Android.Util
                     {
                         processors++;
                     }
-                    if (bogoMIPS < 0 && line.ToLower().Contains("bogomips"))
+                    if (bogoMips < 0 && line.ToLower().Contains("bogomips"))
                     {
-                        string[] bogo_parts = line.Split(':');
+                        string[] bogoParts = line.Split(':');
                         try
                         {
-                            bogoMIPS = float.Parse(bogo_parts[1].Trim());
+                            bogoMips = float.Parse(bogoParts[1].Trim());
                         }
-                        catch (System.FormatException)
+                        catch (FormatException)
                         {
-                            bogoMIPS = -1; // invalid bogomips
+                            bogoMips = -1; // invalid bogomips
                         }
                     }
 
@@ -277,25 +268,25 @@ namespace Libvlc.Xamarin.Android.Util
                     _isCompatible = false;
                 }
 
-                if (elf.e_machine == EM_ARM && elf.att_arch.StartsWith("v7") && !hasArmV7)
+                if (elf.EMachine == EmArm && elf.AttArch.StartsWith("v7") && !hasArmV7)
                 {
                     ErrorMessage = "ARMv7 build on non-ARMv7 device";
                     _isCompatible = false;
                 }
-                if (elf.e_machine == EM_ARM)
+                if (elf.EMachine == EmArm)
                 {
-                    if (elf.att_arch.StartsWith("v6") && !hasArmV6)
+                    if (elf.AttArch.StartsWith("v6") && !hasArmV6)
                     {
                         ErrorMessage = "ARMv6 build on non-ARMv6 device";
                         _isCompatible = false;
                     }
-                    else if (elf.att_fpu && !hasFpu)
+                    else if (elf.AttFpu && !hasFpu)
                     {
                         ErrorMessage = "FPU-enabled build on non-FPU device";
                         _isCompatible = false;
                     }
                 }
-                if (elfIs64bits && !is64bits)
+                if (elfIs64Bits && !is64Bits)
                 {
                     ErrorMessage = "64bits build on 32bits device";
                     _isCompatible = false;
@@ -319,7 +310,7 @@ namespace Libvlc.Xamarin.Android.Util
             {
                 Log.Warn(Tag, "Could not find maximum CPU frequency!");
             }
-            catch (System.FormatException)
+            catch (FormatException)
             {
                 Log.Warn(Tag, "Could not parse maximum CPU frequency!");
                 Log.Warn(Tag, "Failed to parse: " + line);
@@ -350,17 +341,17 @@ namespace Libvlc.Xamarin.Android.Util
 
             // Store into MachineSpecs
              MachineSpecs = new MachineSpecs();
-            Log.Debug(Tag, "machineSpecs: hasArmV6: " + hasArmV6 + ", hasArmV7: " + hasArmV7 + ", hasX86: " + hasX86 + ", is64bits: " + is64bits);
-            MachineSpecs.hasArmV6 = hasArmV6;
-            MachineSpecs.hasArmV7 = hasArmV7;
-            MachineSpecs.hasFpu = hasFpu;
-            MachineSpecs.hasMips = hasMips;
-            MachineSpecs.hasNeon = hasNeon;
-            MachineSpecs.hasX86 = hasX86;
-            MachineSpecs.is64bits = is64bits;
-            MachineSpecs.bogoMIPS = bogoMIPS;
-            MachineSpecs.processors = processors;
-            MachineSpecs.frequency = frequency;
+            Log.Debug(Tag, "machineSpecs: hasArmV6: " + hasArmV6 + ", hasArmV7: " + hasArmV7 + ", hasX86: " + hasX86 + ", is64bits: " + is64Bits);
+            MachineSpecs.HasArmV6 = hasArmV6;
+            MachineSpecs.HasArmV7 = hasArmV7;
+            MachineSpecs.HasFpu = hasFpu;
+            MachineSpecs.HasMips = hasMips;
+            MachineSpecs.HasNeon = hasNeon;
+            MachineSpecs.HasX86 = hasX86;
+            MachineSpecs.Is64Bits = is64Bits;
+            MachineSpecs.BogoMips = bogoMips;
+            MachineSpecs.Processors = processors;
+            MachineSpecs.Frequency = frequency;
             return _isCompatible;
         }
 
@@ -373,7 +364,7 @@ namespace Libvlc.Xamarin.Android.Util
             var libraryPaths = new string[1];
             libraryPaths[0] = applicationInfo.NativeLibraryDir;
 
-            if (string.ReferenceEquals(libraryPaths[0], null))
+            if (ReferenceEquals(libraryPaths[0], null))
             {
                 Log.Error(Tag, "can't find library path");
                 return null;
@@ -406,14 +397,14 @@ namespace Libvlc.Xamarin.Android.Util
                     return null;
                 }
 
-                switch (elf.e_machine)
+                switch (elf.EMachine)
                 {
-                    case EM_386:
-                    case EM_MIPS:
-                    case EM_X86_64:
-                    case EM_AARCH64:
+                    case Em386:
+                    case EmMips:
+                    case EmX8664:
+                    case EmAarch64:
                         return elf;
-                    case EM_ARM:
+                    case EmArm:
                         @in.Close();
                         @in = new RandomAccessFile(file, "r");
                         if (!ReadSection(@in, elf))
@@ -460,13 +451,13 @@ namespace Libvlc.Xamarin.Android.Util
 
         private static bool ReadArmAttributes(RandomAccessFile @in, ElfData elf)
         {
-            byte[] bytes = new byte[elf.sh_size];
-            @in.Seek(elf.sh_offset);
+            byte[] bytes = new byte[elf.ShSize];
+            @in.Seek(elf.ShOffset);
             @in.ReadFully(bytes);
 
             // wrap bytes in a ByteBuffer to force endianess
             ByteBuffer buffer = ByteBuffer.Wrap(bytes);
-            buffer.Order(elf.order);
+            buffer.Order(elf.Order);
 
             //http://infocenter.arm.com/help/topic/com.arm.doc.ihi0044e/IHI0044E_aaelf.pdf
             //http://infocenter.arm.com/help/topic/com.arm.doc.ihi0045d/IHI0045D_ABI_addenda.pdf
@@ -478,13 +469,13 @@ namespace Libvlc.Xamarin.Android.Util
             // sub-sections loop
             while (buffer.Remaining() > 0)
             {
-                int start_section = buffer.Position();
+                int startSection = buffer.Position();
                 int length = buffer.Int;
                 string vendor = GetString(buffer);
                 if (vendor.Equals("aeabi"))
                 {
                     // tags loop
-                    while (buffer.Position() < start_section + length)
+                    while (buffer.Position() < startSection + length)
                     {
                         int start = buffer.Position();
                         int tag = buffer.Get();
@@ -503,12 +494,12 @@ namespace Libvlc.Xamarin.Android.Util
                             if (tag == 6)
                             { // CPU_arch
                                 int arch = GetUleb128(buffer);
-                                elf.att_arch = CPU_archs[arch];
+                                elf.AttArch = CpuArchs[arch];
                             }
                             else if (tag == 27)
                             { // ABI_HardFP_use
                                 GetUleb128(buffer);
-                                elf.att_fpu = true;
+                                elf.AttFpu = true;
                             }
                             else
                             {
@@ -562,25 +553,25 @@ namespace Libvlc.Xamarin.Android.Util
 
         private static bool ReadSection(RandomAccessFile @in, ElfData elf)
         {
-            byte[] bytes = new byte[SECTION_HEADER_SIZE];
-            @in.Seek(elf.e_shoff);
+            byte[] bytes = new byte[SectionHeaderSize];
+            @in.Seek(elf.EShoff);
 
-            for (int i = 0; i < elf.e_shnum; ++i)
+            for (int i = 0; i < elf.EShnum; ++i)
             {
                 @in.ReadFully(bytes);
 
                 // wrap bytes in a ByteBuffer to force endianess
                 ByteBuffer buffer = ByteBuffer.Wrap(bytes);
-                buffer.Order(elf.order);
+                buffer.Order(elf.Order);
 
-                int sh_type = buffer.GetInt(4); // Section type
-                if (sh_type != SHT_ARM_ATTRIBUTES)
+                int shType = buffer.GetInt(4); // Section type
+                if (shType != ShtArmAttributes)
                 {
                     continue;
                 }
 
-                elf.sh_offset = buffer.GetInt(16); // Section file offset
-                elf.sh_size = buffer.GetInt(20); // Section size in bytes
+                elf.ShOffset = buffer.GetInt(16); // Section file offset
+                elf.ShSize = buffer.GetInt(20); // Section size in bytes
                 return true;
             }
 
@@ -590,20 +581,20 @@ namespace Libvlc.Xamarin.Android.Util
 
 
 
-        private const int EM_386 = 3;
-        private const int EM_MIPS = 8;
-        private const int EM_ARM = 40;
-        private const int EM_X86_64 = 62;
-        private const int EM_AARCH64 = 183;
-        private const int ELF_HEADER_SIZE = 52;
-        private const int SECTION_HEADER_SIZE = 40;
-        private const int SHT_ARM_ATTRIBUTES = 0x70000003;
+        private const int Em386 = 3;
+        private const int EmMips = 8;
+        private const int EmArm = 40;
+        private const int EmX8664 = 62;
+        private const int EmAarch64 = 183;
+        private const int ElfHeaderSize = 52;
+        private const int SectionHeaderSize = 40;
+        private const int ShtArmAttributes = 0x70000003;
 
 
         private static bool ReadHeader(RandomAccessFile @in, ElfData elf)
         {
             // http://www.sco.com/developers/gabi/1998-04-29/ch4.eheader.html
-            byte[] bytes = new byte[ELF_HEADER_SIZE];
+            byte[] bytes = new byte[ElfHeaderSize];
             @in.ReadFully(bytes);
             if (bytes[0] != 127 || bytes[1] != (sbyte)'E' || bytes[2] != (sbyte)'L' || bytes[3] != (sbyte)'F' || (bytes[4] != 1 && bytes[4] != 2))
             {
@@ -611,16 +602,16 @@ namespace Libvlc.Xamarin.Android.Util
                 return false;
             }
 
-            elf.is64bits = bytes[4] == 2;
-            elf.order = bytes[5] == 1 ? ByteOrder.LittleEndian : ByteOrder.BigEndian; // ELFDATA2MSB -  ELFDATA2LSB
+            elf.Is64Bits = bytes[4] == 2;
+            elf.Order = bytes[5] == 1 ? ByteOrder.LittleEndian : ByteOrder.BigEndian; // ELFDATA2MSB -  ELFDATA2LSB
 
             // wrap bytes in a ByteBuffer to force endianess
             ByteBuffer buffer = ByteBuffer.Wrap(bytes);
-            buffer.Order(elf.order);
+            buffer.Order(elf.Order);
 
-            elf.e_machine = buffer.GetShort(18); // Architecture
-            elf.e_shoff = buffer.GetInt(32); // Section header table file offset
-            elf.e_shnum = buffer.GetShort(48); // Section header table entry count
+            elf.EMachine = buffer.GetShort(18); // Architecture
+            elf.EShoff = buffer.GetInt(32); // Section header table file offset
+            elf.EShnum = buffer.GetShort(48); // Section header table entry count
             return true;
         }
 
@@ -629,22 +620,22 @@ namespace Libvlc.Xamarin.Android.Util
 
         private class ElfData
         {
-           public  ByteOrder order;
-            public bool is64bits;
-            public int e_machine;
-            public int e_shoff;
-            public int e_shnum;
-            public int sh_offset;
-            public int sh_size;
-            public string att_arch;
-            public bool att_fpu;
+           public  ByteOrder Order;
+            public bool Is64Bits;
+            public int EMachine;
+            public int EShoff;
+            public int EShnum;
+            public int ShOffset;
+            public int ShSize;
+            public string AttArch;
+            public bool AttFpu;
         }
 
         /// <summary>
         /// VLC authorize only "-._~" in Mrl format, android Uri authorize "_-!.~'()*".
         /// Therefore, decode the characters authorized by Android Uri when creating an Uri from VLC.
         /// </summary>
-        public static Uri UriFromMrl(string mrl)
+        public static Uri UriFromMrl(String mrl)
         {
   
             char[] array = mrl.ToCharArray();
@@ -662,14 +653,14 @@ namespace Libvlc.Xamarin.Android.Util
                         {
   
                             int hex = Convert.ToInt32(new string(array, i + 1, 2), 16);
-                            if (URI_AUTHORIZED_CHARS.IndexOf((char)hex) != -1)
+                            if (UriAuthorizedChars.IndexOf((char)hex) != -1)
                             {
                                 sb.Append((char)hex);
                                 i += 2;
                                 continue;
                             }
                         }
-                        catch (System.FormatException)
+                        catch (FormatException)
                         {
                         }
                     }
@@ -677,7 +668,7 @@ namespace Libvlc.Xamarin.Android.Util
                 sb.Append(c);
             }
 
-            return new Uri(sb.ToString());
+            return  Uri.Parse(sb.ToString());
         }
 
 
@@ -702,7 +693,7 @@ namespace Libvlc.Xamarin.Android.Util
 
             foreach (char c in array)
             {
-                if (URI_AUTHORIZED_CHARS.IndexOf(c) != -1)
+                if (UriAuthorizedChars.IndexOf(c) != -1)
                 {
                     // Todo: check this one the original is        
                     sb.Append("%").Append(Integer.ToHexString(c));
@@ -719,22 +710,4 @@ namespace Libvlc.Xamarin.Android.Util
 
 
     }
-
-    public class MachineSpecs
-    {
-        public bool hasNeon;
-        public bool hasFpu;
-        public bool hasArmV6;
-        public bool hasArmV7;
-        public bool hasMips;
-        public bool hasX86;
-        public bool is64bits;
-        public float bogoMIPS;
-        public int processors;
-        public float frequency; // in MHz
-    }
-
-
-
-
 }

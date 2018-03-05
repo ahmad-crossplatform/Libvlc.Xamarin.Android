@@ -29,9 +29,9 @@ from Java to C#
 2. Dialog  (needs a dllImprts)
 3. ~~IVLCOut(Done)~~
 4. LibVlc (needs a dllImprts)
-5. Media
+5. Media (needs a dllImprts)
 6. MediaDiscoverer
-7. MediaList
+7. MediaList (needs a dllImprts)
 8. MediaPlayer
 9. ~~VLCEvent (Done)~~
 10. VlCObject  (needs a dllImprts)

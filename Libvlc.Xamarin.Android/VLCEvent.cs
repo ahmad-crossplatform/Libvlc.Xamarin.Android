@@ -34,7 +34,7 @@
             this.argf1 = argf;
         }
 
-        public void Release ()
+        public virtual void Release ()
         {
             // do nothing
         }
