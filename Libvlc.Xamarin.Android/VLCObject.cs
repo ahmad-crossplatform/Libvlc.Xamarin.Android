@@ -10,15 +10,10 @@ namespace Libvlc.Xamarin.Android
     {
         private IListener<T> _eventListener = null;
         private Handler _handler = null;
-        private LibVlc _libVLC;
         private int _nativeRefCount = 1;
 
 
-        public LibVlc LibVlc
-        {
-            get =>  _libVLC; 
-            set => _libVLC = value; 
-        }
+        public LibVlc LibVlc { get; set; }
 
         protected VLCObject(LibVlc libvlc)
         {
@@ -32,7 +27,7 @@ namespace Libvlc.Xamarin.Android
 
         protected VLCObject()
         {
-            _libVLC = null;
+            LibVlc = null;
         }
 
         /// <summary>
@@ -129,9 +124,9 @@ namespace Libvlc.Xamarin.Android
         }
 
 
-        protected internal abstract T OnEventNative(int eventType, long arg1, long arg2, float argf1);
+        protected abstract T OnEventNative(int eventType, long arg1, long arg2, float argf1);
 
-        protected internal abstract void OnReleaseNative();
+        protected abstract void OnReleaseNative();
 
         private long _instance = 0; // Used from JNI
 
@@ -153,7 +148,7 @@ namespace Libvlc.Xamarin.Android
         }
 
         //TODO TASK: Replace 'unknown' with the appropriate dll name:
-        //[DllImport("unknown")]
+        [DllImport("unknown")]
         private static extern void NativeDetachEvents();
 
     

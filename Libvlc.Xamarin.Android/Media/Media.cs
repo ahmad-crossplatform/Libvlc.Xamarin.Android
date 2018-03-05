@@ -605,7 +605,7 @@ namespace Libvlc.Xamarin.Android.Media
         private extern Stats nativeGetStats();
 
 
-        protected internal override MediaEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
+        protected override MediaEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
         {
             lock (this)
             {
@@ -631,7 +631,7 @@ namespace Libvlc.Xamarin.Android.Media
             }
         }
 
-        protected internal override void OnReleaseNative()
+        protected override void OnReleaseNative()
         {
             if (_subItems != null) _subItems.Release();
             nativeRelease();

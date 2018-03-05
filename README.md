@@ -35,4 +35,5 @@ from Java to C#
 8. MediaPlayer
 9. ~~VLCEvent (Done)~~
 10. VlCObject  (needs a dllImprts)
+11. RendererDiscoverer (needs a dllImprts)
 

@@ -160,7 +160,7 @@ namespace Libvlc.Xamarin.Android.Media
         [DllImport("unknown")]
         private extern void nativeUnlock();
 
-        protected internal override MediaListEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
+        protected override MediaListEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
         {
             lock (this)
             {
@@ -200,7 +200,7 @@ namespace Libvlc.Xamarin.Android.Media
         }
 
 
-        protected internal override void OnReleaseNative()
+        protected override void OnReleaseNative()
         {
             for (var i = 0; i < _mediaArray.Size(); ++i)
             {

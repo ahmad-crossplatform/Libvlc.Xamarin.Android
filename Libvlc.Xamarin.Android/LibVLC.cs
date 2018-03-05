@@ -105,12 +105,12 @@ namespace Libvlc.Xamarin.Android
         public extern string GetChangeSet();
 
 
-        protected internal override VLCEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
+        protected override VLCEvent OnEventNative(int eventType, long arg1, long arg2, float argf1)
         {
             return null;
         }
 
-        protected internal override void OnReleaseNative()
+        protected override void OnReleaseNative()
         {
             NativeRelease();
         }
