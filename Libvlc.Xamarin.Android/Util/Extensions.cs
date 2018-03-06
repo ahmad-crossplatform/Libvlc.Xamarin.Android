@@ -33,7 +33,7 @@ namespace Libvlc.Xamarin.Android.Util
                 var subtitlesExtensions = new[]
                 {
                     ".idx", ".sub", ".srt", ".ssa", ".ass", ".smi", ".utf", ".utf8", ".utf-8", ".rt", ".aqt", ".txt",
-                    ".usf", ".jss", ".cdg", ".psb", ".mpsub", ".mpl2", ".pjs", ".dks", ".stl", ".vtt"
+                    ".usf", ".jss", ".cdg", ".psb", ".mpsub", ".mpl2", ".pjs", ".dks", ".stl", ".vtt", ".ttml"
                 };
 
                 var playlistExtensions = new[] {".m3u", ".asx", ".b4s", ".pls", ".xspf"};

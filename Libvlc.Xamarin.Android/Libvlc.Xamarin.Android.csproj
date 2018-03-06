@@ -59,8 +59,11 @@
     <Compile Include="LibVLC.cs" />
     <Compile Include="MediaPlayer.cs" />
     <Compile Include="Media\AudioTrack.cs" />
+    <Compile Include="Media\IMediaDiscovererEventListener.cs" />
     <Compile Include="Media\Media.cs" />
     <Compile Include="Media\MediaDiscoverer.cs" />
+    <Compile Include="Media\MediaDiscovererDescription.cs" />
+    <Compile Include="Media\MediaDiscovererEvent.cs" />
     <Compile Include="Media\MediaEvent.cs" />
     <Compile Include="Media\MediaList.cs" />
     <Compile Include="Media\MediaListEvent.cs" />
