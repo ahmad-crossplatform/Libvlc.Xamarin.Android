@@ -30,7 +30,7 @@ from Java to C#
 3. ~~IVLCOut(Done)~~
 4. LibVlc (needs a dllImprts)
 5. Media (needs a dllImprts)
-6. MediaDiscoverer
+6. MediaDiscoverer  (needs a dllImprts)
 7. MediaList (needs a dllImprts)
 8. MediaPlayer
 9. ~~VLCEvent (Done)~~
