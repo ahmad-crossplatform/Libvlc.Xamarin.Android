@@ -45,12 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWindow.cs" />
+    <Compile Include="Chapter.cs" />
     <Compile Include="Dialogs\Dialog.cs" />
     <Compile Include="Dialogs\ErrorMessage.cs" />
     <Compile Include="Dialogs\IdDialog.cs" />
     <Compile Include="Dialogs\LoginDialog.cs" />
     <Compile Include="Dialogs\ProgressDialog.cs" />
     <Compile Include="Dialogs\QuestionDialog.cs" />
+    <Compile Include="Equalizer.cs" />
     <Compile Include="Interfaces\ICallbacks.cs" />
     <Compile Include="Interfaces\IMediaEventListener.cs" />
     <Compile Include="Interfaces\IMediaListEventListener.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Interfaces\IVLCVOut.cs" />
     <Compile Include="LibVLC.cs" />
     <Compile Include="MediaPlayer.cs" />
+    <Compile Include="MediaPlayerEvent.cs" />
+    <Compile Include="MediaPlayerEventListener.cs" />
     <Compile Include="Media\AudioTrack.cs" />
     <Compile Include="Media\IMediaDiscovererEventListener.cs" />
     <Compile Include="Media\Media.cs" />
@@ -80,6 +84,8 @@
     <Compile Include="Media\Type.cs" />
     <Compile Include="Media\UnknownTrack.cs" />
     <Compile Include="Media\VideoTrack.cs" />
+    <Compile Include="Navigate.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="RendererDiscoverer.cs" />
     <Compile Include="RendererDiscovererDescription.cs" />
     <Compile Include="RendererDiscovererEvent.cs" />
@@ -89,6 +95,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SurfaceTextureListener.cs" />
     <Compile Include="SurfaceTextureThread.cs" />
+    <Compile Include="Title.cs" />
+    <Compile Include="TrackDescription.cs" />
     <Compile Include="Util\AndroidUtil.cs" />
     <Compile Include="Util\Dumper.cs" />
     <Compile Include="Util\Extensions.cs" />

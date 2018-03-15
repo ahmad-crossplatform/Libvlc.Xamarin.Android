@@ -16,7 +16,7 @@ namespace Libvlc.Xamarin.Android
         private const string Tag = "VLC/LibVLC";
 
         private static bool _isLoaded;
-        private readonly Context _appContext;
+        public readonly Context AppContext;
 
 	    /// <summary>
 	    ///     Create a LibVLC withs options
@@ -25,7 +25,7 @@ namespace Libvlc.Xamarin.Android
 	    /// <param name="options"> </param>
 	    public LibVlc(Context context, List<string> options)
         {
-            _appContext = context.ApplicationContext;
+            AppContext = context.ApplicationContext;
             LoadLibraries();
 
             if (options == null) options = new List<string>();

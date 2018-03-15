@@ -13,7 +13,7 @@ namespace Libvlc.Xamarin.Android
         private int _nativeRefCount = 1;
 
 
-        public LibVlc LibVlc { get; set; }
+        protected readonly LibVlc LibVlc;
 
         protected VLCObject(LibVlc libvlc)
         {
@@ -61,6 +61,13 @@ namespace Libvlc.Xamarin.Android
             }
         }
 
+        /// <summary>
+        /// Release the native object if ref count is 1.
+        ///   
+        /// After this call, native calls are not possible anymore.
+        /// You can still call others methods to retrieve cached values.
+        /// For example: if you parse, then release a media, you'll still be able to retrieve all Metas or Tracks infos.
+        /// </summary>
         public  void Release()
         {
             int refCount = -1;
@@ -90,6 +97,10 @@ namespace Libvlc.Xamarin.Android
                 }
             }
         }
+        
+        
+
+
 
         /// <summary>
         /// Set an event listener.
@@ -151,7 +162,6 @@ namespace Libvlc.Xamarin.Android
         [DllImport("unknown")]
         private static extern void NativeDetachEvents();
 
-    
         /*
         As they are marked unused we will not port them for now . 
 

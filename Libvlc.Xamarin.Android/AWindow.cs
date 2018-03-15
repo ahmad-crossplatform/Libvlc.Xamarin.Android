@@ -252,7 +252,7 @@ namespace Libvlc.Xamarin.Android
             DetachViews();
         }
 
-        private bool AreSurfacesWaiting()
+        public bool AreSurfacesWaiting()
         {
             return _surfacesState.Get() == SurfaceStateAttached;
         }
@@ -305,8 +305,8 @@ namespace Libvlc.Xamarin.Android
         ///     Callback called from <seealso cref="IVLCVout#sendMouseEvent" />.
         /// </summary>
         /// <param name="nativeHandle"> handle passed by <seealso cref="#registerNative(long)" />. </param>
-        /// <param name="action"> see ACTION_* in <seealso cref="android.view.MotionEvent" />. </param>
-        /// <param name="button"> see BUTTON_* in <seealso cref="android.view.MotionEvent" />. </param>
+        /// <param name="action"> see ACTION_* in <seealso cref="MotionEvent" />. </param>
+        /// <param name="button"> see BUTTON_* in <seealso cref="MotionEvent" />. </param>
         /// <param name="x"> x coordinate. </param>
         /// <param name="y"> y coordinate. </param>
         [DllImport("unknown")]
